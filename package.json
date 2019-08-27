@@ -1,0 +1,35 @@
+{
+  "name": "node-red-contrib-sma-webconnect",
+  "version": "0.0.1",
+  "description": "Node-RED node to query the Webconnect interface of SMA inverters",
+  "main": "sma-webconnect.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "sma-webconnect.html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlindner/node-red-contrib-sma-webconnect.git"
+  },
+  "keywords": [
+    "sma",
+    "webconnect"
+  ],
+  "author": "Roland Lindner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rlindner/node-red-contrib-sma-webconnect/issues"
+  },
+  "homepage": "https://github.com/rlindner/node-red-contrib-sma-webconnect#readme",
+  "node-red": {
+    "nodes": {
+      "sma-webconnect": "sma-webconnect.js"
+    }
+  },
+  "dependencies": {
+    "request": "^2.88.0",
+    "requestretry": "^4.0.0"
+  }
+}

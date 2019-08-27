@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sma-webconnect', {
+        category: 'SMA',
+        color: '#C0DEED',
+        credentials: {
+          password: { type: "password" }
+        },
+        defaults: {
+            ip_address: { value: "" },
+            right: { value: "usr" },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "white-globe.png",
+        label: function() {
+            return this.ip_address || "sma-webconnect";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="sma-webconnect">
+    <div class="form-row">
+        <label for="node-input-ip_address"><i class="fa fa-desktop"></i> IP</label>
+        <input type="text" id="node-input-ip_address" placeholder="192.168.1.50">
+    </div>
+    <div class="form-row">
+     <label for="node-input-password"><i class="fa fa-group"></i> User Group</label>
+     <select id="node-input-right">
+       <option value="istl">Installer</option>
+       <option value="usr">User</option>
+     </select>
+    </div>
+    <div class="form-row">
+     <label for="node-input-password"><i class="fa fa-asterisk"></i> Password</label>
+     <input type="password" id="node-input-password">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="sma-webconnect">
+    <p>A node that connects to SMA inverters in your local network using the speedwire interface.</p>
+</script>
