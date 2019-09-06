@@ -8,7 +8,7 @@ The implementation has been tested with an ethernet connected Sunny Tripower 10.
 ## Install
 
 ```
-npm install node-red-contrib-sma-webconnect
+npm install git+https://github.com/rlindner/node-red-contrib-sma-webconnect.git
 ```
 
 ## Configure
