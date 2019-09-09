@@ -13,7 +13,7 @@ npm install git+https://github.com/rlindner/node-red-contrib-sma-webconnect.git
 
 ## Configure
 
-Configure the IP address, user group and password in the node properties
+Configure the IP address, user group and password in the node properties. Uncheck the "Use HTTPS connection" checkbox if your inverter doesn't support HTTPS.
 
 ![Node properties](node-properties.png)
 
