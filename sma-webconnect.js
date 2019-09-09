@@ -16,9 +16,15 @@ module.exports = function(RED) {
       }, callback);
     }
 
+    function buildUrl(https, host, path) {
+      return (https ? "https" : "http") + "://" + host + path;
+    }
+
     function login(node, callback) {
+      const url = buildUrl(node.use_tls, node.ip_address, "/dyn/login.json");
+
       request(
-        "https://" + node.ip_address + "/dyn/login.json",
+        url,
         {
           right: node.right,
           pass: node.credentials.password
@@ -46,8 +52,10 @@ module.exports = function(RED) {
     }
 
     function getValues(node, callback, onSessionTimeout) {
+      const url = buildUrl(node.use_tls, node.ip_address, "/dyn/getValues.json?sid=" + _sid);
+
       request(
-        "https://" + node.ip_address + "/dyn/getValues.json?sid=" + _sid,
+        url,
         {
           "destDev": [],
           "keys": [
@@ -115,8 +123,10 @@ module.exports = function(RED) {
     }
 
     function getFreeSessionsCount(node, callback) {
+      const url = buildUrl(node.use_tls, node.ip_address, "/dyn/sessionCheck.json");
+
       request(
-        "https://" + node.ip_address + "/dyn/sessionCheck.json",
+        url,
         {},
         (error, response, body) => {
           if (error) {
@@ -135,10 +145,12 @@ module.exports = function(RED) {
     }
 
     function logout(node, callback) {
-      node.log("https://" + node.ip_address + "/dyn/logout.json?sid=" + _sid);
+      const url = buildUrl(node.use_tls, node.ip_address, "/dyn/logout.json?sid=" + _sid);
+
+      node.log(url);
 
       request(
-        "https://" + node.ip_address + "/dyn/logout.json?sid=" + _sid,
+        url,
         {},
         (error, response, body) => {
           var result = false;
@@ -189,6 +201,7 @@ module.exports = function(RED) {
     function SMAWebconnectNode(config) {
       RED.nodes.createNode(this, config);
       this.ip_address = config.ip_address;
+      this.use_tls = config.use_tls;
       this.right = config.right;
       var node = this;
       node.on('input', function(msg) {

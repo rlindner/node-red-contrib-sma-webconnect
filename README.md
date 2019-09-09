@@ -13,7 +13,7 @@ npm install git+https://github.com/rlindner/node-red-contrib-sma-webconnect.git
 
 ## Configure
 
-Configure the IP adress, user group and password in the node properties
+Configure the IP address, user group and password in the node properties
 
 ![Node properties](node-properties.png)
 

@@ -8,6 +8,7 @@
         defaults: {
             ip_address: { value: "" },
             right: { value: "usr" },
+            use_tls: { value: true },
         },
         inputs: 1,
         outputs: 1,
@@ -19,21 +20,25 @@
 </script>
 
 <script type="text/x-red" data-template-name="sma-webconnect">
-    <div class="form-row">
-        <label for="node-input-ip_address"><i class="fa fa-desktop"></i> IP</label>
-        <input type="text" id="node-input-ip_address" placeholder="192.168.1.50">
-    </div>
-    <div class="form-row">
-     <label for="node-input-password"><i class="fa fa-group"></i> User Group</label>
-     <select id="node-input-right">
-       <option value="istl">Installer</option>
-       <option value="usr">User</option>
-     </select>
-    </div>
-    <div class="form-row">
-     <label for="node-input-password"><i class="fa fa-asterisk"></i> Password</label>
-     <input type="password" id="node-input-password">
-    </div>
+  <div class="form-row">
+    <label for="node-input-ip_address"><i class="fa fa-desktop"></i> IP</label>
+    <input type="text" id="node-input-ip_address" placeholder="192.168.1.50">
+  </div>
+  <div class="form-row">
+    <input type="checkbox" id="node-input-use_tls" style="display: inline-block; width: auto; vertical-align: top;">
+    <label for="node-input-use_tls" style="width: auto"><i class="fa fa-lock"></i> Use HTTPS connection</label>
+  </div>
+  <div class="form-row">
+    <label for="node-input-password"><i class="fa fa-group"></i> User Group</label>
+    <select id="node-input-right">
+      <option value="istl">Installer</option>
+      <option value="usr">User</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-password"><i class="fa fa-asterisk"></i> Password</label>
+    <input type="password" id="node-input-password">
+  </div>
 </script>
 
 <script type="text/x-red" data-help-name="sma-webconnect">
