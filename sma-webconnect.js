@@ -23,12 +23,16 @@ module.exports = function(RED) {
     function login(node, callback) {
       const url = buildUrl(node.use_tls, node.ip_address, "/dyn/login.json");
 
+      node.debug("requesting " + url);
+
       request(
         url,
         {
           right: node.right,
           pass: node.credentials.password
         }, (error, response, body) => {
+          node.debug("response to " + url + ": " + JSON.stringify(response));
+
           var result;
 
           if (error) {
@@ -54,6 +58,8 @@ module.exports = function(RED) {
     function getValues(node, callback, onSessionTimeout) {
       const url = buildUrl(node.use_tls, node.ip_address, "/dyn/getValues.json?sid=" + _sid);
 
+      node.debug("requesting " + url);
+
       request(
         url,
         {
@@ -67,6 +73,8 @@ module.exports = function(RED) {
             "6100_40463700" // grid consumption
           ]
         }, (error, response, body) => {
+          node.debug("response to " + url + ": " + JSON.stringify(response));
+
           if (error) {
             node.error(error);
           } else if (body) {
@@ -125,10 +133,14 @@ module.exports = function(RED) {
     function getFreeSessionsCount(node, callback) {
       const url = buildUrl(node.use_tls, node.ip_address, "/dyn/sessionCheck.json");
 
+      node.debug("requesting " + url);
+
       request(
         url,
         {},
         (error, response, body) => {
+          node.debug("response to " + url + ": " + JSON.stringify(response));
+
           if (error) {
             node.error(error);
           } else if (body) {
@@ -153,6 +165,8 @@ module.exports = function(RED) {
         url,
         {},
         (error, response, body) => {
+          node.debug("response to " + url + ": " + JSON.stringify(response));
+
           var result = false;
 
           if (error) {
