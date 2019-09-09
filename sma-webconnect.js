@@ -37,6 +37,10 @@ module.exports = function(RED) {
 
           if (error) {
             node.error(error);
+          } else if (response && response.statusCode == 301 && response.headers && response.headers.location) {
+            if (response.headers.location.substring(0, 5) != response.request.uri.protocol) {
+              node.error("detected an redirect to HTTPS, please change your configuration to use HTTPS");
+            }
           } else if (body) {
             if (body.err) {
               node.error(body);
