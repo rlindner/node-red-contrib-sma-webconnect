@@ -1,13 +1,13 @@
 module.exports = function(RED) {
-    const retry = require('requestretry');
+    const retry = require("requestretry");
 
     var _sid = null;
 
     function request(uri, body, callback) {
       retry({
         method: "POST",
-        uri: uri,
-        body: body,
+        uri,
+        body,
         json: true,
         strictSSL: false,
         timeout: 1500,
@@ -64,7 +64,7 @@ module.exports = function(RED) {
             "6100_0046E700", // phase 3 voltage
             "6100_40263F00", // power
             "6100_40463600", // grid feedin
-            "6100_40463700", // grid consumption
+            "6100_40463700" // grid consumption
           ]
         }, (error, response, body) => {
           if (error) {
@@ -204,13 +204,13 @@ module.exports = function(RED) {
       this.use_tls = config.use_tls;
       this.right = config.right;
       var node = this;
-      node.on('input', function(msg) {
+      node.on("input", function(msg) {
         query(node, 3, (result) => {
           msg.payload = result;
           node.send(msg);
         });
       });
-      node.on('close', function(done) {
+      node.on("close", function(done) {
         logout(node, (result) => {
           done();
         });
