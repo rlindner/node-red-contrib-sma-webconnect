@@ -14,8 +14,10 @@
     "url": "git+https://github.com/rlindner/node-red-contrib-sma-webconnect.git"
   },
   "keywords": [
+    "node-red",
     "sma",
-    "webconnect"
+    "webconnect",
+    "speedwire"
   ],
   "author": "Roland Lindner",
   "license": "MIT",
