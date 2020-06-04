@@ -1,6 +1,6 @@
 # node-red-contrib-sma-webconnect
 
-Node-RED node to query the Webconnect interface of SMA inverters.
+Node-RED node to query the Webconnect interface of SMA inverters or storage systems.
 
 ## Compatibility
 The implementation has been tested with an ethernet connected Sunny Tripower 10.0 but should work with various similiar models. I'm happy to compile a compatiblity list of successfully tested models here.
@@ -13,21 +13,92 @@ npm install node-red-contrib-sma-webconnect
 
 ## Configure
 
-Configure the IP address, user group and password in the node properties. Uncheck the "Use HTTPS connection" checkbox if your inverter doesn't support HTTPS.
+Configure the IP address, user group and password in the node properties. Uncheck the "Use HTTPS connection" checkbox if your device doesn't support HTTPS.
 
 ![Node properties](node-properties.png)
 
-## Example message payload
+### Configure Input
+
+The node needs a payload to be inserted so it knows which message and what values it should read from the unit.
+
+![Payload config](message-payload.png)
+
+* `msg_id`: tells the node which message contains the values
+* `msg_values`: lists all messages that should be read
+
+`msg_id` and `msg_values` can easily be found by connecting to the webinterface and using the browser DEV-Tools to inspect the values displayed on the `/spotvalues` page.
+
+## Example message payloads
+
+### Input
 
 ```json
 {
-  "available_sessions": 3,
-  "grid_consumption": 0,
-  "grid_feedin": 6546,
-  "phase1_voltage": 230.12,
-  "phase2_voltage": 231.01,
-  "phase3_voltage": 230.55,
-  "power": 7608
+    "msg_id": "1",
+    "msg_values": {
+        "6100_0046E500": {
+            "name": "phase1_voltage",
+            "divider": 100,
+            "unit": "v"
+        },
+        "6100_0046E600": {
+            "name": "phase2_voltage",
+            "divider": 100,
+            "unit": "v"
+        },
+        "6100_0046E700": {
+            "name": "phase3_voltage",
+            "divider": 100,
+            "unit": "v"
+        },
+        "6100_40463600": {
+            "name": "grid_feedin",
+            "divider": 1,
+            "unit": "W"
+        },
+        "6100_40463700": {
+            "name": "grid_consumption",
+            "divider": 1,
+            "unit": "Wh"
+        },
+        "6100_40263F00": {
+            "name": "power",
+            "divider": 1,
+            "unit": "W"
+        }
+    }
+}
+```
+
+### Output
+
+```json
+{
+  "phase1_voltage": {
+    "value": 230.00,
+    "unit": "V"
+    },
+  "phase2_voltage": {
+    "value": 230.00,
+    "unit": "V"
+    },
+  "phase3_voltage": {
+    "value": 230.00,
+    "unit": "V"
+    },
+  "grid_feedin": {
+    "value": 350,
+    "unit": "W"
+    },
+  "grid_consumption": {
+    "value": 0,
+    "unit" :"W"
+    },
+  "power": {
+    "value": 3600,
+  "unit": "W"
+  },
+  ...
 }
 ```
 
