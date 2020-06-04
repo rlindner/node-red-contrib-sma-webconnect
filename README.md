@@ -21,7 +21,7 @@ Configure the IP address, user group and password in the node properties. Unchec
 
 The node needs a payload to be inserted so it knows which message and what values it should read from the unit.
 
-![Payload config](message-payload.png)
+![Payload config](input-payload.png)
 
 * `msg_id`: tells the node which message contains the values
 * `msg_values`: lists all messages that should be read
@@ -98,7 +98,6 @@ The node needs a payload to be inserted so it knows which message and what value
     "value": 3600,
   "unit": "W"
   },
-  ...
 }
 ```
 
