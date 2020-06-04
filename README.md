@@ -29,7 +29,7 @@ The node needs a payload to be inserted so it knows which message and what value
   * `divider`: set the divider of the read value
   * `unit`: unit of read value 
 
-`id` and `values` can easily be found by connecting to the webinterface and using the browser DEV-Tools to inspect the values displayed on the `/spotvalues` page.
+`Message id` and `value ids` can easily be found by connecting to the webinterface and using the browsers developer tools to inspect the values displayed on the `/spotvalues` page.
 
 ## Example message payloads
 
