@@ -23,10 +23,10 @@ The node needs a payload to be inserted so it knows which message and what value
 
 ![Payload config](input-payload.png)
 
-* `msg_id`: tells the node which message contains the values
-* `msg_values`: lists all messages that should be read
+* `id`: tells the node which message contains the values
+* `values`: lists all messages that should be read
 
-`msg_id` and `msg_values` can easily be found by connecting to the webinterface and using the browser DEV-Tools to inspect the values displayed on the `/spotvalues` page.
+`id` and `values` can easily be found by connecting to the webinterface and using the browser DEV-Tools to inspect the values displayed on the `/spotvalues` page.
 
 ## Example message payloads
 
@@ -34,8 +34,8 @@ The node needs a payload to be inserted so it knows which message and what value
 
 ```json
 {
-    "msg_id": "1",
-    "msg_values": {
+    "id": "1",
+    "values": {
         "6100_0046E500": {
             "name": "phase1_voltage",
             "divider": 100,
