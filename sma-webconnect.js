@@ -143,14 +143,11 @@ module.exports = function(RED) {
     const url = buildUrl(node.use_tls, node.ip_address, "/dyn/getValues.json?sid=" + node.sid);
       
     // set default message according to device type
-    if (node.device_selection == "sb_storage") {
-      message = sb_storage;
-    }
-    else if (node.device_selection == "custom") {
+    if (node.device_selection == "custom") {
       message = node.custom_message;
     }
     else {
-      message = sb_tripower;
+      message = eval(node.device_selection);
     }
     
     const value_keys = Object.keys(message.values);
