@@ -1,46 +1,64 @@
 <script type="text/javascript">
-    RED.nodes.registerType('sma-webconnect', {
-        category: 'SMA',
-        color: '#C0DEED',
-        credentials: {
-          password: { type: "password" }
-        },
-        defaults: {
-            ip_address: { value: "" },
-            right: { value: "usr" },
-            use_tls: { value: true },
-        },
-        inputs: 1,
-        outputs: 1,
-        icon: "white-globe.png",
-        label: function() {
-            return this.ip_address || "sma-webconnect";
-        }
-    });
+  RED.nodes.registerType('sma-webconnect', {
+      category: 'SMA',
+      color: '#C0DEED',
+      credentials: {
+        password: { type: "password" }
+      },
+      defaults: {
+          ip_address: { value: "" },
+          right: { value: "usr" },
+          use_tls: { value: true },
+          device_selection: { value: "sb_tripower" }
+      },
+      inputs: 1,
+      outputs: 1,
+      icon: "white-globe.png",
+      label: function() {
+          return this.ip_address || "sma-webconnect";
+      }
+  });
 </script>
 
 <script type="text/x-red" data-template-name="sma-webconnect">
-  <div class="form-row">
-    <label for="node-input-ip_address"><i class="fa fa-desktop"></i> IP</label>
-    <input type="text" id="node-input-ip_address" placeholder="192.168.1.50">
-  </div>
-  <div class="form-row">
-    <input type="checkbox" id="node-input-use_tls" style="display: inline-block; width: auto; vertical-align: top;">
-    <label for="node-input-use_tls" style="width: auto"><i class="fa fa-lock"></i> Use HTTPS connection</label>
-  </div>
-  <div class="form-row">
-    <label for="node-input-password"><i class="fa fa-group"></i> User Group</label>
-    <select id="node-input-right">
-      <option value="istl">Installer</option>
-      <option value="usr">User</option>
-    </select>
-  </div>
-  <div class="form-row">
-    <label for="node-input-password"><i class="fa fa-asterisk"></i> Password</label>
-    <input type="password" id="node-input-password">
-  </div>
+<div class="form-row">
+  <label for="node-input-ip_address"><i class="fa fa-desktop"></i> IP</label>
+  <input type="text" id="node-input-ip_address" placeholder="192.168.1.42">
+</div>
+<div class="form-row">
+  <input type="checkbox" id="node-input-use_tls" style="display: inline-block; width: auto; vertical-align: top;">
+  <label for="node-input-use_tls" style="width: auto"><i class="fa fa-lock"></i> Use HTTPS connection</label>
+</div>
+<div class="form-row">
+  <label for="node-input-right"><i class="fa fa-group"></i> User Group</label>
+  <select id="node-input-right">
+    <option value="istl">Installer</option>
+    <option value="usr">User</option>
+  </select>
+</div>
+<div class="form-row">
+  <label for="node-input-password"><i class="fa fa-asterisk"></i> Password</label>
+  <input type="password" id="node-input-password">
+</div>
+<div class="form-row">
+  <span>Device Selection</span>
+</div>
+<div class="form-row">
+  <label for="node-input-device_selection"><i class="fa fa-gears"></i> Device</label>
+  <select id="node-input-device_selection">
+    <option selected value="sb_tripower">SB TRIPOWER 8.0/10.0</option>
+    <option value="sb_storage">SB STORAGE 2.5</option>
+    <option value="custom">Custom Values</option>
+  </select>
+</div>
+<div class="form-tips">
+  <b> Device Selection: </b>
+  <br>
+  These are some devices that are known to work with this node and provide basic values from them. 
+  If "Custom Values" is selected an input payload can be used to configure the values that should be read.
+</div>
 </script>
 
 <script type="text/x-red" data-help-name="sma-webconnect">
-    <p>A node that connects to SMA inverters in your local network using the speedwire interface.</p>
+  <p>A node that connects to SMA devices in your local network using their webinterface.</p>
 </script>
