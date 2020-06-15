@@ -143,7 +143,7 @@ module.exports = function(RED) {
     const url = buildUrl(node.use_tls, node.ip_address, "/dyn/getValues.json?sid=" + node.sid);
       
     // set default message according to device type
-    if (node.device_selection == "custom") {
+    if (node.device_selection == "experimental") {
       message = node.custom_message;
     }
     else {
@@ -318,7 +318,7 @@ module.exports = function(RED) {
     
     var node = this;
     node.on("input", function(msg) {
-      if (node.device_selection == "custom") {
+      if (node.device_selection == "experimental") {
         node.custom_message = msg.payload;
       }
 
