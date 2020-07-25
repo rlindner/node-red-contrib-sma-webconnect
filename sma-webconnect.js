@@ -320,7 +320,7 @@ module.exports = function(RED) {
     var node = this;
     node.on("input", function(msg) {
       if (msg.payload.hasOwnProperty('sma_config')) {
-        node.use_custom_config = false;
+        node.use_custom_config = true;
         node.custom_config = msg.payload.sma_config;
       }
 
