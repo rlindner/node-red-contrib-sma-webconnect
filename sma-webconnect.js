@@ -143,8 +143,8 @@ module.exports = function(RED) {
     const url = buildUrl(node.use_tls, node.ip_address, "/dyn/getValues.json?sid=" + node.sid);
       
     // set default message according to device type
-    if (node.device_selection == "experimental") {
-      message = node.custom_message;
+    if (node.use_custom_config) {
+      message = node.custom_config;
     }
     else {
       message = eval(node.device_selection);
@@ -313,13 +313,15 @@ module.exports = function(RED) {
     this.use_tls = config.use_tls;
     this.right = config.right;			
     this.device_selection = config.device_selection;
-    this.custom_message = {};
+    this.custom_config = {};
+    this.use_custom_config = false;
     this.sid = null;
     
     var node = this;
     node.on("input", function(msg) {
-      if (node.device_selection == "experimental") {
-        node.custom_message = msg.payload;
+      if (msg.payload.hasOwnProperty('sma_config')) {
+        node.use_custom_config = false;
+        node.custom_config = msg.payload.sma_config;
       }
 
       query(node, 3, (result) => {

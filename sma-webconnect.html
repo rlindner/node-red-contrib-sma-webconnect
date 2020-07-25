@@ -48,22 +48,23 @@
   <select id="node-input-device_selection">
     <option selected value="sb_tripower">SB TRIPOWER 8.0/10.0</option>
     <option value="sb_storage">SB STORAGE 2.5</option>
-    <option value="experimental">Experimental</option>
   </select>
 </div>
 <div class="form-tips">
   <b> Device Selection: </b>
   <br>
-  These are some devices that are known to work with this node. 
-  The node will read and provide basic values from these.
+  These are some devices that are known to work with this node, the node will read and provide basic values from these.
+  <br>
+  If you find a new device that works with the node feel free to post a suggestion on the nodes <a href="https://github.com/rlindner/node-red-contrib-sma-webconnect">github page</a>.
   <br>
   <br>
-  <b> Experimental </b>
+  <b> FAQ </b>
   <br>
-  This is intended for experienced users and enables to read custom values from a device with a predefinable input payload. 
-  Instructions on how to configure the input payload are available in the README of the git repository. 
+  <b>Q:</b> Will this node work with my device?
   <br>
-  <b>Due to the wide variety of devices available there will be no individual support if experimental is used!</b>
+  <b>A:</b> As long as your device provides a web interface this node should be able to read values from it.
+  You can easily test this if you can connect to the IP of your device on port 80 (HTTP) or 433 (HTTPS).
+  <br>
 </div>
 </script>
 

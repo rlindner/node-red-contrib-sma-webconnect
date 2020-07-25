@@ -42,14 +42,19 @@ This node tries to collect the metrics very agressively, i. e.:
 
 ## Configure Custom Messages
 
-The node already provides configurations for sunny boy tripower 8.0/10.0 and storage 2.5 units, but can optionally be configured with an input payload to read custom values from the devices.
+The node already provides basic configurations for Sunny Boy Tripower 8.0/10.0 and Storage 2.5 units. But it is possible to configure the node with an input message to read additional values from your devices.
+
+**The following steps show you how to read custom values from your device**
 
 ![Payload config](input-payload.png)
 
+* `sma_config`: this will tell the node to use the custom configuration, the device selection in the node will be ignored
 * `id`: tells the node which message contains the values
-* `values`: lists all messages that should be read
-  * `name`: custom name of read value
+* `values`: lists all values that should be read
+  * `value_id`: id of values that should be read, this is mandatory!
+  * `name`: custom name of read value, this is mandatory!
   * `divider`: sets the divider of the read value (optional)
+  * `unit`: unit of value (optional)
 
 `Message id` and `value ids` can easily be found by connecting to the webinterface and using the browsers developer tools to inspect the values displayed on the `/spotvalues` page.
 
@@ -59,39 +64,41 @@ The node already provides configurations for sunny boy tripower 8.0/10.0 and sto
 
 ```json
 {
-    "id": "1",
-    "values": {
-        "6100_0046E500": {
-            "name": "phase1_voltage",
-            "divider": 100
-        },
-        "6100_0046E600": {
-            "name": "phase2_voltage",
-            "divider": 100
-        },
-        "6100_0046E700": {
-            "name": "phase3_voltage",
-            "divider": 100
-        },
-        "6100_40463600": {
-            "name": "grid_feedin",
-            "divider": 1
-        },
-        "6100_40463700": {
-            "name": "grid_consumption",
-            "divider": 1
-        },
-        "6100_40263F00": {
-            "name": "power",
-            "divider": 1
+    "sma_config": {
+        "id": "1",
+        "values": {
+            "6100_0046E500": {
+                "name": "phase1_voltage",
+                "divider": 100
+            },
+            "6100_0046E600": {
+                "name": "phase2_voltage",
+                "divider": 100
+            },
+            "6100_0046E700": {
+                "name": "phase3_voltage",
+                "divider": 100
+            },
+            "6100_40463600": {
+                "name": "grid_feedin",
+                "divider": 1
+            },
+            "6100_40463700": {
+                "name": "grid_consumption",
+                "divider": 1
+            },
+            "6100_40263F00": {
+                "name": "power",
+                "divider": 1
+            }
         }
     }
 }
 ```
 
-## How to find `message` an `value` id
+## How to find `message` and `value` id
 
-This section shows you how to get the `message` and `value ids` the node needs in the input payload to read values from the devices.
+This section shows you how to get the `message id` and `value ids` the node needs in the input payload to read values from the devices.
 
 1. connect to the webinterface of you device, i.e. `http(s)://192.168.1.42/#/login`
 2. got to the overview section of your device, i.e. `http(s)://192.168.1.42#/spotvalues`
