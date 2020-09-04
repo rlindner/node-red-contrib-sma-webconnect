@@ -41,7 +41,6 @@ This node tries to collect the metrics very agressively, i. e.:
 * retries are attempted 3 times
 
 ## Configure Custom Messages
-
 The node already provides basic configurations for Sunny Boy Tripower 8.0/10.0 and Storage 2.5 units, but it is possible to configure the node with an input message to read additional values from your devices.
 
 **The following steps show you how to read custom values from your device**
@@ -61,7 +60,6 @@ The node already provides basic configurations for Sunny Boy Tripower 8.0/10.0 a
 ## Example input payload
 
 ### Input
-
 ```json
 {
     "sma_config": {
@@ -97,11 +95,10 @@ The node already provides basic configurations for Sunny Boy Tripower 8.0/10.0 a
 ```
 
 ## How to find `message` and `value` id
-
 This section shows you how to get the `message id` and `value ids` the node needs in the input payload to read values from a device.
 
 1. connect to the webinterface of your device, e.g. `http(s)://192.168.1.42/#/login`
-2. got to the overview section of your device, e.g. `http(s)://192.168.1.42#/spotvalues`
+2. got to the overview section of your device, e.g. `http(s)://192.168.1.42/#/spotvalues`
 3. open your browser developer tools
 4. get the `message id` of your device by opening the network tab of the dev tools and selecting the XHR filter
     * select one of the responses from the `/getValues.json` endpoint
