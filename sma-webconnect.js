@@ -1,86 +1,86 @@
-module.exports = function(RED) {
+module.exports = function (RED) {
   const retry = require("requestretry");
-  
+
   const sb_tripower = {
     "id": "1",
     "values": {
       "6100_0046E500": {
-          "name": "phase1_voltage",
-          "divider": 100
+        "name": "phase1_voltage",
+        "divider": 100
       },
       "6100_0046E600": {
-          "name": "phase2_voltage",
-          "divider": 100
+        "name": "phase2_voltage",
+        "divider": 100
       },
       "6100_0046E700": {
-          "name": "phase3_voltage",
-          "divider": 100
+        "name": "phase3_voltage",
+        "divider": 100
       },
       "6100_40463600": {
-          "name": "grid_feedin",
-          "divider": 1
+        "name": "grid_feedin",
+        "divider": 1
       },
       "6100_40463700": {
-          "name": "grid_consumption",
-          "divider": 1
+        "name": "grid_consumption",
+        "divider": 1
       },
       "6100_40263F00": {
-          "name": "power",
-          "divider": 1
+        "name": "power",
+        "divider": 1
       }
     }
   };
-  
+
   const sb_storage = {
     "id": "7",
     "values": {
       "6100_00295A00": {
-          "name": "charge_percent",
-          "divider": 1
+        "name": "charge_percent",
+        "divider": 1
       },
       "6100_00495C00": {
-          "name": "voltage",
-          "divider": 100
+        "name": "voltage",
+        "divider": 100
       },
       "6400_00496700": {
-          "name": "overall_charge_wh",
-          "divider": 1
+        "name": "overall_charge_wh",
+        "divider": 1
       },
       "6100_00496900": {
-          "name": "current_charging_w",
-          "divider": 1
+        "name": "current_charging_w",
+        "divider": 1
       },
       "6400_00497E00": {
-          "name": "current_charging_wh",
-          "divider": 1
+        "name": "current_charging_wh",
+        "divider": 1
       },
       "6400_00496800": {
-          "name": "overall_discharge_wh",
-          "divider": 1
+        "name": "overall_discharge_wh",
+        "divider": 1
       },
       "6100_00496A00": {
-          "name": "current_discharge_w",
-          "divider": 1
+        "name": "current_discharge_w",
+        "divider": 1
       },
       "6400_00496D00": {
-          "name": "current_discharge_wh",
-          "divider": 1
+        "name": "current_discharge_wh",
+        "divider": 1
       },
       "6400_00496900": {
-          "name": "charge_w",
-          "divider": 1
+        "name": "charge_w",
+        "divider": 1
       },
       "6100_40495B00": {
-          "name": "temperature_deg",
-          "divider": 10
+        "name": "temperature_deg",
+        "divider": 10
       },
       "6180_08495E00": {
-          "name": "state_charging",
-          "divider": 1
+        "name": "state_charging",
+        "divider": 1
       }
     }
   };
-  
+
   var message = {};
 
   function request(uri, body, callback) {
@@ -141,7 +141,7 @@ module.exports = function(RED) {
 
   function getValues(node, callback, onSessionTimeout) {
     const url = buildUrl(node.use_tls, node.ip_address, "/dyn/getValues.json?sid=" + node.sid);
-      
+
     // set default message according to device type
     if (node.use_custom_config) {
       message = node.custom_config;
@@ -149,7 +149,7 @@ module.exports = function(RED) {
     else {
       message = eval(node.device_selection);
     }
-    
+
     const value_keys = Object.keys(message.values);
 
     node.debug("requesting " + url);
@@ -175,7 +175,7 @@ module.exports = function(RED) {
             }
           } else if (body.result) {
             var result = {};
-            
+
             // initialize all values to 0
             for (const key of value_keys) {
               result[message.values[key].name] = 0;
@@ -184,15 +184,21 @@ module.exports = function(RED) {
             for (const id in body.result) {
               const set = body.result[id];
 
+              // iterate over messages from sma device
               for (const key in set) {
-                if ( message.values.hasOwnProperty(key) ) { 
+                if (message.values.hasOwnProperty(key)) {
                   const value = set[key];
-                  
+
                   if (value != null) {
+                    var val_cnt = 0;  // value counter
+                    var val_arr = []; // value array
+                    
+                    // iterate over all elements in the message
                     for (const elm of value[message.id]) {
                       if (elm.val) {
                         var tmp = null;
-                        
+
+                        // if element contains an object store its first value (mostly tags in the messages)
                         if (elm.val[0]) {
                           tmp = elm.val[0];
                         }
@@ -205,8 +211,17 @@ module.exports = function(RED) {
                           }
                         }
 
-                        result[message.values[key].name] = tmp;
+                        // add values to the array
+                        val_arr[val_cnt++] = tmp;
                       }
+                    }
+
+                    // store value in output message
+                    if (val_cnt > 1) {
+                      result[message.values[key].name] = val_arr;
+                    }
+                    else {
+                      result[message.values[key].name] = val_arr[0];
                     }
                   }
                 }
@@ -249,7 +264,7 @@ module.exports = function(RED) {
   }
 
   function logout(node, callback) {
-    if (node.ip_address){
+    if (node.ip_address) {
       const url = buildUrl(node.use_tls, node.ip_address, "/dyn/logout.json?sid=" + node.sid);
 
       node.log(url);
@@ -311,14 +326,14 @@ module.exports = function(RED) {
     RED.nodes.createNode(this, config);
     this.ip_address = config.ip_address;
     this.use_tls = config.use_tls;
-    this.right = config.right;			
+    this.right = config.right;
     this.device_selection = config.device_selection;
     this.custom_config = {};
     this.use_custom_config = false;
     this.sid = null;
-    
+
     var node = this;
-    node.on("input", function(msg) {
+    node.on("input", function (msg) {
       if (msg.payload.hasOwnProperty('sma_config')) {
         node.use_custom_config = true;
         node.custom_config = msg.payload.sma_config;
@@ -329,7 +344,7 @@ module.exports = function(RED) {
         node.send(msg);
       });
     });
-    node.on("close", function(done) {
+    node.on("close", function (done) {
       logout(node, (result) => {
         done();
       });
