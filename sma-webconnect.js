@@ -194,22 +194,27 @@ module.exports = function (RED) {
                     
                     // iterate over all elements in the message
                     for (const elm of value[message.id]) {
-                      if (elm.val) {
-                        var tmp = null;
+                      // if element contains an object with more than one key save the whole object
+                      if (Object.keys(elm).length > 1) {
+                        values.push(elm);
+                      }
+                      else {
+                        var tmp = 0;
 
-                        // if element contains an object store its first value
-                        if (elm.val[0]) {
-                          tmp = elm.val[0];
-                        }
-                        else {
-                          if (typeof elm.val === 'number' && message.values[key].divider) {
-                            tmp = elm.val / message.values[key].divider;
+                        if (elm.val) {
+                          // if element contains an object with only one key store it (mostly tags?)
+                          if (elm.val[0]) {
+                            tmp = elm.val[0];
                           }
                           else {
-                            tmp = elm.val;
+                            if (typeof elm.val === 'number' && message.values[key].divider) {
+                              tmp = elm.val / message.values[key].divider;
+                            }
+                            else {
+                              tmp = elm.val;
+                            }
                           }
                         }
-
                         // add values to the array
                         values.push(tmp);
                       }
