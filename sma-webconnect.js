@@ -190,15 +190,14 @@ module.exports = function (RED) {
                   const value = set[key];
 
                   if (value != null) {
-                    var val_cnt = 0;  // value counter
-                    var val_arr = []; // value array
+                    var values = []; // value array
                     
                     // iterate over all elements in the message
                     for (const elm of value[message.id]) {
                       if (elm.val) {
                         var tmp = null;
 
-                        // if element contains an object store its first value (mostly tags in the messages)
+                        // if element contains an object store its first value
                         if (elm.val[0]) {
                           tmp = elm.val[0];
                         }
@@ -212,16 +211,16 @@ module.exports = function (RED) {
                         }
 
                         // add values to the array
-                        val_arr[val_cnt++] = tmp;
+                        values.push(tmp);
                       }
                     }
 
                     // store value in output message
-                    if (val_cnt > 1) {
-                      result[message.values[key].name] = val_arr;
+                    if (values.length > 1) {
+                      result[message.values[key].name] = values;
                     }
                     else {
-                      result[message.values[key].name] = val_arr[0];
+                      result[message.values[key].name] = values[0];
                     }
                   }
                 }
