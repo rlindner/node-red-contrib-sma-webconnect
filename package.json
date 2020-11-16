@@ -16,8 +16,7 @@
   "keywords": [
     "node-red",
     "sma",
-    "webconnect",
-    "speedwire"
+    "webconnect"
   ],
   "author": "Roland Lindner",
   "license": "MIT",
