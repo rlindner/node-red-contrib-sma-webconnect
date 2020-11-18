@@ -119,5 +119,34 @@ describe('sma-webconnect Node', function() {
         }
       });
     });
+
+    it('should return tags', function() {
+      const config = {
+        "id": "1",
+        "values": {
+          "6180_08652500": {
+            "name": "unknown2"
+          }
+        }
+      }
+
+      const response = {
+        "xxxx-xxxxxxxx": {
+          "6180_08652500": {
+            "1": [{
+              "tag": 303
+            }]
+          }
+        }
+      }
+
+      const result = functions.parseResult(response, config)
+
+      result.should.eql({
+        unknown2: {
+          tag: 303
+        }
+      })
+    });
   });
 });
