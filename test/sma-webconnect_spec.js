@@ -134,7 +134,9 @@ describe('sma-webconnect Node', function() {
         "xxxx-xxxxxxxx": {
           "6180_08652500": {
             "1": [{
-              "tag": 303
+              "val": [{
+                "tag": 303
+              }]
             }]
           }
         }
