@@ -48,8 +48,12 @@ module.exports = function (RED) {
         "name": "phase1_current",
         "divider": 1000
       },
+      "6400_0046C300": {
+        "name": "pv_gen_meter",
+        "divider": 1000
+      },
       "6100_0046C200": {
-        "name": "phase1_power",
+        "name": "power",
         "divider": 1
       }
     }
