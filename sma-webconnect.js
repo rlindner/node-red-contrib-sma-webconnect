@@ -1,4 +1,4 @@
-const sma_devices = require('./sma-devices').obj;
+const sma_devices = require('./sma-device-presets/').obj;
 
 module.exports = function (RED) {
   const retry = require("requestretry");
