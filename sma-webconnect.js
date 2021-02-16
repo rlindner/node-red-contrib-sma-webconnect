@@ -259,6 +259,17 @@ module.exports = function (RED) {
     this.sid = null;
 
     var node = this;
+
+    // change device names to new format till refactoring has been done
+    /** REMOVE AFTER REFACTOR */
+    if(config.device_selection === 'sb_tripower'){
+      this.device_selection = 'sunny_tripower';
+    }
+    else if(config.device_selection === 'sb_storage'){
+      this.device_selection = 'sunny_boy_storage'
+    }
+    /** END */
+
     node.on("input", function (msg) {
       if (msg.payload.hasOwnProperty('sma_config')) {
         node.use_custom_config = true;
