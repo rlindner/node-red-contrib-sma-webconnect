@@ -1,4 +1,6 @@
-const sma_devices = require('./sma-device-presets/').obj;
+const sma_devices = require('./sma-device-presets/');
+const sma_device_list = sma_devices.getDeviceList();
+const sma_device_configs = sma_devices.getDeviceConfigs();
 
 module.exports = function (RED) {
   const retry = require("requestretry");
@@ -69,7 +71,7 @@ module.exports = function (RED) {
       message = node.custom_config;
     }
     else {
-      message = eval(sma_devices[node.device_selection]);
+      message = eval(sma_device_configs[node.device_selection]);
     }
 
     const value_keys = Object.keys(message.values);

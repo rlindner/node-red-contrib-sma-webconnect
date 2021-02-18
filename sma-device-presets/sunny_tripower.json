@@ -1,29 +1,32 @@
 {
-    "id": "1",
-    "values": {
-        "6100_0046E500": {
-            "name": "phase1_voltage",
-            "divider": 100
-        },
-        "6100_0046E600": {
-            "name": "phase2_voltage",
-            "divider": 100
-        },
-        "6100_0046E700": {
-            "name": "phase3_voltage",
-            "divider": 100
-        },
-        "6100_40463600": {
-            "name": "grid_feedin",
-            "divider": 1
-        },
-        "6100_40463700": {
-            "name": "grid_consumption",
-            "divider": 1
-        },
-        "6100_40263F00": {
-            "name": "power",
-            "divider": 1
+    "name": "SUNNY TRIPOWER 8.0/10.0",
+    "config": {
+        "id": "1",
+        "values": {
+            "6100_0046E500": {
+                "name": "phase1_voltage",
+                "divider": 100
+            },
+            "6100_0046E600": {
+                "name": "phase2_voltage",
+                "divider": 100
+            },
+            "6100_0046E700": {
+                "name": "phase3_voltage",
+                "divider": 100
+            },
+            "6100_40463600": {
+                "name": "grid_feedin",
+                "divider": 1
+            },
+            "6100_40463700": {
+                "name": "grid_consumption",
+                "divider": 1
+            },
+            "6100_40263F00": {
+                "name": "power",
+                "divider": 1
+            }
         }
     }
 }
