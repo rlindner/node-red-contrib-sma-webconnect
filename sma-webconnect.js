@@ -272,7 +272,7 @@ module.exports = function (RED) {
     }
     /** END */
 
-    node.on("input", function (msg) {
+    node.on("input", function(msg) {
       if (msg.payload.hasOwnProperty('sma_config')) {
         node.use_custom_config = true;
         node.custom_config = msg.payload.sma_config;
@@ -283,7 +283,7 @@ module.exports = function (RED) {
         node.send(msg);
       });
     });
-    node.on("close", function (done) {
+    node.on("close", function(done) {
       logout(node, (result) => {
         done();
       });

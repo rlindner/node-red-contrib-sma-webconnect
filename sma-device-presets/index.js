@@ -2,7 +2,7 @@ const fs = require('fs');
 let sma_device_list = {};
 let sma_device_configs = {};
 
-// read all devices presets from files in this directory and export them
+// read all device presets from files in this directory and export them
 // the file name will be used as key for the config object!
 function updateDeviceList() {
     fs.readdirSync(__dirname + '/').forEach(function(file) {
@@ -23,9 +23,10 @@ function getDeviceList() {
     return sma_device_list;
 }
 
-// planed for future use to update device list on-the-fly
+// initial call to load configs when node loads
 updateDeviceList();
 
 module.exports.getDeviceList = getDeviceList;
 module.exports.getDeviceConfigs = getDeviceConfigs;
+//export function for future use (e.g. load new configs without restarting the node)
 module.exports.updateDeviceList = updateDeviceList;
