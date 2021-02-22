@@ -1,5 +1,4 @@
 const sma_devices = require('./sma-device-presets/');
-const sma_device_list = sma_devices.getDeviceList();
 const sma_device_configs = sma_devices.getDeviceConfigs();
 
 module.exports = function (RED) {
