@@ -1,9 +1,12 @@
-const sma_devices = require('./sma-device-presets/');
-const sma_device_configs = sma_devices.getDeviceConfigs();
-
 module.exports = function (RED) {
   const retry = require("requestretry");
-
+  const functions = require("./functions.js");
+  const parseResult = functions.parseResult;
+  const smaPresets = require('./sma-device-presets/');
+  
+  // update list on init
+  smaPresets.readConfigs();
+  var smaDevConfigs = smaPresets.getConfigs();
   var message = {};
 
   function request(uri, body, callback) {
@@ -70,7 +73,7 @@ module.exports = function (RED) {
       message = node.custom_config;
     }
     else {
-      message = eval(sma_device_configs[node.device_selection]);
+      message = eval(smaDevConfigs[node.device_selection]);
     }
 
     const value_keys = Object.keys(message.values);
@@ -98,7 +101,7 @@ module.exports = function (RED) {
             }
           } else if (body.result) {
             if (callback) {
-              const result = parseResult(body.result, message)
+              const result = parseResult(body.result, message);
               callback(result);
             }
           }
@@ -202,19 +205,19 @@ module.exports = function (RED) {
     this.use_custom_config = false;
     this.sid = null;
 
-    var node = this;
-
     // change device names to new format till refactoring has been done
     /** REMOVE AFTER REFACTOR */
-    if(config.device_selection === 'sb_tripower'){
+    if(this.device_selection === 'sb_tripower'){
       this.device_selection = 'sunny_tripower';
     }
-    else if(config.device_selection === 'sb_storage'){
+    else if(this.device_selection === 'sb_storage'){
       this.device_selection = 'sunny_boy_storage'
     }
     /** END */
 
-    node.on("input", function (msg) {
+    var node = this;
+  
+    node.on("input", function(msg) {
       if (msg.payload.hasOwnProperty('sma_config')) {
         node.use_custom_config = true;
         node.custom_config = msg.payload.sma_config;
@@ -225,7 +228,7 @@ module.exports = function (RED) {
         node.send(msg);
       });
     });
-    node.on("close", function (done) {
+    node.on("close", function(done) {
       logout(node, (result) => {
         done();
       });
