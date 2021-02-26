@@ -4,8 +4,8 @@ module.exports = function (RED) {
   const parseResult = functions.parseResult;
   const smaPresets = require('./sma-device-presets/');
   
-  // update list on init
-  smaPresets.readConfigs();
+  // read presets on init
+  smaPresets.readPresets();
   var smaDevConfigs = smaPresets.getConfigs();
   var message = {};
 
