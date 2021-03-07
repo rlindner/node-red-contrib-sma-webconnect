@@ -95,7 +95,7 @@ The necessary message and value ids can easily be obtained by visiting the `/spo
 The following steps show you how to obtain the `message id` and `value ids` you will have to provide in the input payload to read custom values from the devices.
 
 1. Connect to the webinterface of you device, i.e. `http(s)://192.168.1.42/#/login`
-2. Open the overview section of your device, i.e. `http(s)://192.168.1.42#/spotvalues`
+2. Open the overview section of your device, i.e. `http(s)://192.168.1.42/#/spotvalues`
 3. Open your browsers developer tools
 4. Get the message `id` of your device by opening the network tab of the developer tools and selecting the XHR filter
     * select one of the responses from the `/getValues.json` endpoint

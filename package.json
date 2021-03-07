@@ -7,6 +7,7 @@
     "test": "mocha \"test/**/*_spec.js\""
   },
   "files": [
+    "device-presets/*",
     "functions.js",
     "sma-webconnect.html"
   ],

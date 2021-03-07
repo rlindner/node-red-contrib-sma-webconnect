@@ -1,0 +1,24 @@
+{
+    "name":"SUNNY BOY 3.0/3.6/4.0/5.0 (1AV-40)",
+    "config": {
+        "id": "1",
+        "values": {
+            "6100_00464800": {
+                "name": "phase1_voltage",
+                "divider": 100
+            },
+            "6100_00465700": {
+                "name": "frequency",
+                "divider": 100
+            },
+            "6100_40465300": {
+                "name": "phase1_current",
+                "divider": 1000
+            },
+            "6100_0046C200": {
+                "name": "phase1_power",
+                "divider": 1
+            }
+        }
+    }
+}

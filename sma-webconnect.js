@@ -2,11 +2,11 @@ module.exports = function (RED) {
   const retry = require("requestretry");
   const functions = require("./functions.js");
   const parseResult = functions.parseResult;
-  const smaPresets = require('./sma-device-presets/');
+  const devicePresets = require('./device-presets/');
   
   // read presets on init
-  smaPresets.readPresets();
-  var smaDevConfigs = smaPresets.getConfigs();
+  devicePresets.readPresets();
+  var deviceConfigs = devicePresets.getConfigs();
   var message = {};
 
   function request(uri, body, callback) {
@@ -73,7 +73,7 @@ module.exports = function (RED) {
       message = node.custom_config;
     }
     else {
-      message = eval(smaDevConfigs[node.device_selection]);
+      message = eval(deviceConfigs[node.device_selection]);
     }
 
     const value_keys = Object.keys(message.values);
@@ -207,10 +207,9 @@ module.exports = function (RED) {
 
     // change device names to new format till refactoring has been done
     /** REMOVE AFTER REFACTOR */
-    if(this.device_selection === 'sb_tripower'){
+    if (this.device_selection === 'sb_tripower') {
       this.device_selection = 'sunny_tripower';
-    }
-    else if(this.device_selection === 'sb_storage'){
+    } else if (this.device_selection === 'sb_storage') {
       this.device_selection = 'sunny_boy_storage'
     }
     /** END */
