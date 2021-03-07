@@ -5,7 +5,7 @@
         "values": {
             "6100_00295A00": {
                 "name": "charge_percent",
-            "divider": 1
+                "divider": 1
             },
             "6100_00495C00": {
                 "name": "voltage",
