@@ -1,5 +1,4 @@
 const fs = require('fs');
-let devList = {};
 let devConfigs = {};
 
 module.exports = {
@@ -14,10 +13,6 @@ module.exports = {
                 devConfigs[devName] = devConfig.config;
             }
         });
-    },
-
-    getList: () => {
-        return devList;
     },
 
     getConfigs: () => {
