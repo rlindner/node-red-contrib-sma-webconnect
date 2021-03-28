@@ -1,88 +1,12 @@
 module.exports = function (RED) {
   const retry = require("requestretry");
   const functions = require("./functions.js");
-  const parseResult = functions.parseResult
-
-  const sb_tripower = {
-    "id": "1",
-    "values": {
-      "6100_0046E500": {
-        "name": "phase1_voltage",
-        "divider": 100
-      },
-      "6100_0046E600": {
-        "name": "phase2_voltage",
-        "divider": 100
-      },
-      "6100_0046E700": {
-        "name": "phase3_voltage",
-        "divider": 100
-      },
-      "6100_40463600": {
-        "name": "grid_feedin",
-        "divider": 1
-      },
-      "6100_40463700": {
-        "name": "grid_consumption",
-        "divider": 1
-      },
-      "6100_40263F00": {
-        "name": "power",
-        "divider": 1
-      }
-    }
-  };
-
-  const sb_storage = {
-    "id": "7",
-    "values": {
-      "6100_00295A00": {
-        "name": "charge_percent",
-        "divider": 1
-      },
-      "6100_00495C00": {
-        "name": "voltage",
-        "divider": 100
-      },
-      "6400_00496700": {
-        "name": "overall_charge_wh",
-        "divider": 1
-      },
-      "6100_00496900": {
-        "name": "current_charging_w",
-        "divider": 1
-      },
-      "6400_00497E00": {
-        "name": "current_charging_wh",
-        "divider": 1
-      },
-      "6400_00496800": {
-        "name": "overall_discharge_wh",
-        "divider": 1
-      },
-      "6100_00496A00": {
-        "name": "current_discharge_w",
-        "divider": 1
-      },
-      "6400_00496D00": {
-        "name": "current_discharge_wh",
-        "divider": 1
-      },
-      "6400_00496900": {
-        "name": "charge_w",
-        "divider": 1
-      },
-      "6100_40495B00": {
-        "name": "temperature_deg",
-        "divider": 10
-      },
-      "6180_08495E00": {
-        "name": "state_charging",
-        "divider": 1
-      }
-    }
-  };
-
+  const parseResult = functions.parseResult;
+  const devicePresets = require('./device-presets/');
+  
+  // read presets on init
+  devicePresets.readPresets();
+  var deviceConfigs = devicePresets.getConfigs();
   var message = {};
 
   function request(uri, body, callback) {
@@ -149,7 +73,7 @@ module.exports = function (RED) {
       message = node.custom_config;
     }
     else {
-      message = eval(node.device_selection);
+      message = eval(deviceConfigs[node.device_selection]);
     }
 
     const value_keys = Object.keys(message.values);
@@ -177,7 +101,7 @@ module.exports = function (RED) {
             }
           } else if (body.result) {
             if (callback) {
-              const result = parseResult(body.result, message)
+              const result = parseResult(body.result, message);
               callback(result);
             }
           }
@@ -281,8 +205,18 @@ module.exports = function (RED) {
     this.use_custom_config = false;
     this.sid = null;
 
+    // change device names to new format till refactoring has been done
+    /** REMOVE AFTER REFACTOR */
+    if (this.device_selection === 'sb_tripower') {
+      this.device_selection = 'sunny_tripower';
+    } else if (this.device_selection === 'sb_storage') {
+      this.device_selection = 'sunny_boy_storage'
+    }
+    /** END */
+
     var node = this;
-    node.on("input", function (msg) {
+  
+    node.on("input", function(msg) {
       if (msg.payload.hasOwnProperty('sma_config')) {
         node.use_custom_config = true;
         node.custom_config = msg.payload.sma_config;
@@ -293,7 +227,7 @@ module.exports = function (RED) {
         node.send(msg);
       });
     });
-    node.on("close", function (done) {
+    node.on("close", function(done) {
       logout(node, (result) => {
         done();
       });

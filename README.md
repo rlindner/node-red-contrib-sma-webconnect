@@ -40,26 +40,13 @@ This node tries to collect the metrics very agressively, i. e.:
 * timed out requests are retried after 100ms
 * retries are attempted 3 times
 
-## Configure Custom Messages
-The node already provides basic configurations for Sunny Boy Tripower 8.0/10.0 and Storage 2.5 units, but it is possible to configure the node with an input message to read additional values from your devices.
+## Read Custom Values
 
-**The following steps show you how to read custom values from your device**
+The node provides preset configurations for Sunny Boy 1AV-40, Sunny Tripower and Sunny Boy Storage 2.5 units to read basic values from those devices. But it is also possible to configure the node with a input message to read additional values from your devices.
 
-![Payload config](input-payload.png)
+To read custom values the node needs an input payload composed of the message id that contains the data and a list of ids of the values you want to read.
 
-* `sma_config`: this will tell the node to use the custom configuration, the device selection in the node will be ignored (**mandatory**)
-* `id`: tells the node which message contains the values (**mandatory**)
-* `values`: lists all values that should be read (**mandatory**)
-  * `value_id`: id of values that should be read (**mandatory**)
-  * `name`: custom name of read value (**mandatory**)
-  * `divider`: sets the divider of the read value (optional)
-  * `unit`: unit of value (optional)
-
-`Message id` and `value ids` can easily be found by connecting to the webinterface of your device and using your browser developer tools to inspect the values displayed on the `/spotvalues` page.
-
-## Example input payload
-
-### Input
+### Example input payload
 ```json
 {
     "sma_config": {
@@ -93,21 +80,35 @@ The node already provides basic configurations for Sunny Boy Tripower 8.0/10.0 a
     }
 }
 ```
+* `sma_config`: this will tell the node to use the provided input payload, the device selection in the node settings will be ignored (**required**)
+* `id`: tells the node which message contains the values (**required**)
+* `values`: list of value ids that should be read (**required**)
+  * `value_id`: id of value that should be read (**required**)
+    * `name`: custom name for the read value (**required**)
+    * `divider`: sets a divider for the read value (optional)
 
-## How to find `message` and `value` id
-This section shows you how to get the `message id` and `value ids` the node needs in the input payload to read values from a device.
+### The following steps will show you how to read custom values from your device
+The necessary message and value ids can easily be obtained by visiting the `/spotvalues` page of your device webinterface and by using the developer tools of your browser.
 
-1. connect to the webinterface of your device, e.g. `http(s)://192.168.1.42/#/login`
-2. got to the overview section of your device, e.g. `http(s)://192.168.1.42/#/spotvalues`
-3. open your browser developer tools
-4. get the `message id` of your device by opening the network tab of the dev tools and selecting the XHR filter
+### How to find message and value id
+
+The following steps show you how to obtain the `message id` and `value ids` you will have to provide in the input payload to read custom values from the devices.
+
+1. Connect to the webinterface of you device, i.e. `http(s)://192.168.1.42/#/login`
+2. Open the overview section of your device, i.e. `http(s)://192.168.1.42/#/spotvalues`
+3. Open your browsers developer tools
+4. Get the message `id` of your device by opening the network tab of the developer tools and selecting the XHR filter
     * select one of the responses from the `/getValues.json` endpoint
-    ![Find message id](find-message-id.png)
-        * the red is the `message id`, the green a `value id`
-5. get the `value id` of your wanted values by using the inspect function of the dev tools
-    * open one of the accordions and search for the values you want to read
-    * use the inspection tool to select the displayed value and view the `value id`
-![Find value id](find-value-ids.png)
-      * the value id should be a 13 character long string, in this example it's `6380_40251E00`
 
+    | ![Find message id](find-message-id.png) |
+    |:--:|
+    | *the red is the message `id` and the green a possible `value_id`* |
+
+5. get the `value_id` of your wanted values by using the inspect function of the developer tools
+    * open the accordions and search for the values you want to read
+    * use the inspect tool to select the displayed value and show the `value_id`
+    
+    | ![Find value id](find-value-ids.png) |
+    |:--:|
+    | *the value id should be a 13 character long string, in this example it's `6380_40251E00`* |
 
