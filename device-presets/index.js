@@ -9,7 +9,6 @@ module.exports = {
             if (file.match(/\.json$/) !== null) {
                 const devName = file.replace('.json', '');
                 const devConfig = JSON.parse(fs.readFileSync(__dirname + '/' + file));
-                devList[devName] = devConfig.name;
                 devConfigs[devName] = devConfig.config;
             }
         });
