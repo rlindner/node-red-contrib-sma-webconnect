@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "request": "^2.88.2",
-    "requestretry": "^4.1.2"
+    "requestretry": "^7.0.0"
   },
   "devDependencies": {
     "mocha": "^8.2.1",
