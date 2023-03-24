@@ -7,7 +7,6 @@ module.exports = function (RED) {
   // read presets on init
   devicePresets.readPresets();
   var deviceConfigs = devicePresets.getConfigs();
-  var message = {};
 
   function request(uri, body, callback) {
     retry({
@@ -67,6 +66,8 @@ module.exports = function (RED) {
 
   function getValues(node, callback, onSessionTimeout) {
     const url = buildUrl(node.use_tls, node.ip_address, "/dyn/getValues.json?sid=" + node.sid);
+
+    var message = {};
 
     // set default message according to device type
     if (node.use_custom_config) {
