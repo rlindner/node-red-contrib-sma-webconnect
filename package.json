@@ -1,15 +1,15 @@
 {
   "name": "node-red-contrib-sma-webconnect",
   "version": "0.2.0",
-  "description": "Node-RED node to query the Webconnect interface of SMA inverters",
-  "main": "sma-webconnect.js",
+  "description": "Node-RED node to query the web interface of SMA inverters",
+  "main": "main.js",
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\""
   },
   "files": [
     "device-presets/*",
     "functions.js",
-    "sma-webconnect.html"
+    "main.html"
   ],
   "repository": {
     "type": "git",
@@ -21,8 +21,7 @@
     "sunny",
     "boy",
     "storage",
-    "tripower",
-    "webconnect"
+    "tripower"
   ],
   "author": "Roland Lindner",
   "license": "MIT",
@@ -32,7 +31,7 @@
   "homepage": "https://github.com/rlindner/node-red-contrib-sma-webconnect#readme",
   "node-red": {
     "nodes": {
-      "sma-webconnect": "sma-webconnect.js"
+      "sma-webconnect": "main.js"
     }
   },
   "dependencies": {
