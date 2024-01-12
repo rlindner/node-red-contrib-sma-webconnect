@@ -1,7 +1,7 @@
 {
-    "name": "Sunny Tripower 8.0/10.0 (3AV-40)",
+    "name": "Sunny Tripower Smart Energy 5.0/6.0/8.0/10.0 (3SE-40)",
     "config": {
-        "id": "1",
+        "id": "9",
         "values": {
             "6100_0046E500": {
                 "name": "phase1_voltage",
@@ -23,8 +23,28 @@
                 "name": "grid_consumption",
                 "divider": 1
             },
+            "6100_0046C200": {
+                "name": "production",
+                "divider": 1
+            },
+            "6100_00468100": {
+                "name": "frequency",
+                "divider": 100
+            },
             "6100_40263F00": {
-                "name": "power",
+                "name": "power_overall",
+                "divider": 1
+            },
+            "6100_00496900": {
+                "name": "battery_charge",
+                "divider": 1
+            },
+            "6100_00496A00": {
+                "name": "battery_discharge",
+                "divider": 1
+            },
+            "6100_00295A00": {
+                "name": "battery_soc",
                 "divider": 1
             }
         }
