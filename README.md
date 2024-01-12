@@ -1,6 +1,6 @@
 # node-red-contrib-sma-webconnect
 
-Node-RED node to query the Webconnect interface of SMA inverters or storage systems.
+Node-RED node to query the web interface of SMA inverters or storage systems.
 
 ## Compatibility
 The implementation has been tested with an ethernet connected Sunny Tripower 10.0 but should work with various similiar models. I'm happy to compile a compatiblity list of successfully tested models here.
