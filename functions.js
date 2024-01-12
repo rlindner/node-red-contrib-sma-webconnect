@@ -15,7 +15,7 @@ module.exports = {
         if (config.values.hasOwnProperty(key)) {
           const value = set[key];
 
-          if (value != null) {
+          if ((value != null) && (value[config.id] != null)) {
             var values = []; // value array
 
             // iterate over all elements in the message
