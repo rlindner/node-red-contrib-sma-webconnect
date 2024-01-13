@@ -30,6 +30,31 @@ describe('sma-webconnect Node', function() {
       });
     });
 
+    it('should not throw because of an invalid id', function() {
+      const config = {
+        "id": "1",
+        "values": {
+          "6100_0046E500": {
+            "name": "phase1_voltage"
+          }
+        }
+      }
+
+      const response = {
+        "xxxx-xxxxxxxx": {
+          "6100_0046E500": {
+            "7": [{
+              "val": 23543
+            }]
+          }
+        }
+      }
+
+      const result = functions.parseResult(response, config)
+
+      should.exist(result);
+    });
+
     it('should use the divider on simple values if provided', function() {
       const config = {
         "id": "1",
